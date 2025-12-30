@@ -28,6 +28,20 @@
           &middot; <span title="{{ i18n "single-writtenBy" }}" dir="{{ if ne ($.Param "languagedir") "rtl" }}ltr{{ else }}rtl{{ end }}">{{ if $.Param "authorEmoji" }}{{ $.Param "authorEmoji" }}{{ else }}{{ ($.Site.Params.authorIcon | safeHTML) | default "✍️" }}{{ end }}&nbsp;{{ . }}</span>
           {{ end }}
         </h6>
+        {{ with .Params.tags }}
+          <div class="summary-card__tags">
+            {{ $length := len . }}
+            {{ $lastIndex := sub $length 1 }}
+            {{ range $index, $tag := . }}
+              {{ if $tag }}
+                <a href="{{ $.Site.BaseURL }}/tags/{{ $tag | urlize }}" class="tag">#{{ $tag }}</a>
+                {{ if ne $index $lastIndex }}
+                  <span class="tag-delimiter">&middot;</span>
+                {{ end }}
+              {{ end }}
+            {{ end }}
+          </div>
+        {{ end }}
       </header>
       <div>
         <div class="summary-classic__text p2">
