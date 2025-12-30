@@ -1,4 +1,22 @@
-{{ if not .Site.IsServer }}
-  {{ template "_internal/google_analytics.html" . }}
-  {{ template "_internal/google_analytics_async.html" . }}
+{{ if and (.Site.Params.googleAnalytics) (not .Site.IsServer) }}
+  <script>
+    {{ $googleAnalyticsId := .Site.Params.googleAnalytics }}
+    var googleAnalyticsId = JSON.parse({{ $googleAnalyticsId | jsonify }});
+
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://www.googletagmanager.com/gtag/js?id=" + googleAnalyticsId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', {{ .Site.Params.googleAnalytics }});
+  </script>
 {{ end }}
+

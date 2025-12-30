@@ -11,6 +11,13 @@
       &middot; <span title="{{ i18n "single-writtenBy" }}" dir="{{ if ne ($.Param "languagedir") "rtl" }}ltr{{ else }}rtl{{ end }}">{{ if $.Param "AuthorEmoji" }}{{ $.Param "AuthorEmoji" }}{{ else }}{{ ($.Site.Params.authorIcon | safeHTML) | default "✍️" }}{{ end }}&nbsp;{{ . }}</span>
       {{ end }}
     </h6>
+    <div class="summary-card__tags">
+      {{ with .Params.tags }}
+        {{ range . }}
+          <span class="tag">{{ . }}</span>
+        {{ end }}
+      {{ end }}
+    </div>
   </header>
   <div class="summary-card__content">
     <div class="summary-card__text p2">
